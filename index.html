@@ -12,11 +12,11 @@ title: kanamachi-boy
 </ul>
 
 カテゴリー抽出
-{% for category in site.categories %}
+
 <ul>
-	{% for post in category[1] %}
-	<li>{{ post.title }}>/li>
-	{% endfor %}
-</ul>
+{% for category in site.categories %}	
+	<li>{{ category[0] }}></li>
 {% endfor %}
+</ul>
+
 </div>
