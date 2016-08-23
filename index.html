@@ -13,7 +13,12 @@ title: kanamachi-boy
 
 カテゴリー抽出<br>
 {% for category in site.categories %}
+
 <b>{{ category[0] }}</b>
+{% for post in site.categories.category[0] %}
+ ・・・ {{ post.title }}<br>
+{% endfor %}
+
 {% endfor %}
 
 
