@@ -1,0 +1,160 @@
+@charset "UTF-8";	/* 文字コード指定 */
+
+body {
+	margin:0 0 0 0;
+	font-family:'メイリオ',Meiryo,'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','ＭＳ Ｐゴシック',sans-serif !important;	
+}
+
+span {
+	font-style: italic; 
+}
+
+div.post {
+	margin: 0px 0px 0px 30px;	/* 左余白 */
+	padding: 0px;
+	font-family:'メイリオ',Meiryo,'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','ＭＳ Ｐゴシック',sans-serif !important;
+	font-size: 1.0em;
+	color: #000333;
+	background: #FFFFFF;
+	text-shadow: 0 1px 0 rgba(255,255,255,.8);
+	-webkit-font-smoothing: subpixel-antialiased;
+}
+
+a:link, a:visited {
+	text-decoration: none;
+	color: #339933 !important;
+}
+
+a:hover {
+	text-decoration: underline;
+	color: #9f0000 !important;
+}
+
+a.external {		/* 外部リンクの場合 */
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAVklEQVR4Xn3PgQkAMQhDUXfqTu7kTtkpd5RA8AInfArtQ2iRXFWT2QedAfttj2FsPIOE1eCOlEuoWWjgzYaB/IkeGOrxXhqB+uA9Bfcm0lAZuh+YIeAD+cAqSz4kCMUAAAAASUVORK5CYII=") 
+		no-repeat scroll right center transparent;
+	padding-right: 13px;
+}
+
+h1 {
+	width: 100%;
+	height: 85px;
+	padding: 12px;	/* backgroundと文字の間隔 */
+	border: 1px dashed rgba(0, 0, 255, 1);	/* backgroundとmarginの境界 */
+	margin-left: 0px;	/* 左右autoにするとセンタリングされる */
+	margin-top: 0px;
+	font-size: 2.0em;
+	color: rgba(0, 0, 255, 1);
+	background-color: rgba(0, 0, 255, .5);
+}
+
+h2 {	/* アイコン付き */
+	clear: both;
+	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAABAUlEQVRIx+2VMUoDUBBEH5oUQkCENA5Y2FjZyC9EQe29g8ewsLDwNIKFaQUPEATnAhZqCGErEUUiIcTYJCKiCMlqldf9KXbYmYUPM35h/qtQSqlJqkRE/08MJK0Ch5K6kjoRMZzGYO4HvQYcAEellLXsDerA1ui5CGxLWpbUiojXbIMPGdiVVJV0HxGDaSP6jiqwD5yUUjazN/jMArAhaV1SOyKesg3GLAE7kuqSbiOil20wZgXYkzQcHcLbpB1MRCVhRhM4t/2cbXAHnNpuZW/wCDRsX2VH1AcugQvbvewOrkc5P2SX3AbObN9kX9EL0ACatgfZZ9oBjm13Z//xv/AO0VRXUXq7OgYAAAAASUVORK5CYII=) no-repeat 0px 2px;
+	border-bottom: 1px dashed #339933;
+	padding: 0px 0px 0px 23px;
+	margin-bottom: 5px;
+	font-family:'メイリオ',Meiryo,'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','ＭＳ Ｐゴシック',sans-serif !important;
+	font-size: 1.5em;
+}
+
+
+code {
+  font: 14px Monaco,"Courier New","DejaVu Sans Mono","Bitstream Vera Sans Mono",monospace;
+  color: #52595d;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  padding: 2px 10px;
+  display: inline-block;
+}
+
+
+
+blockquote {
+	margin: 8px 0px 16px 200px;
+	padding-left: 20px;
+	border-left: 1px solid #336633;
+	font-size: 0.9em;
+	line-height: 18px !important;
+	color: #006600;
+}
+
+blockquote strong, blockquote b {
+	font-weight: 600;
+	color:  #006600;
+}
+
+
+blockquote  cite {
+    font-size:14px;
+    line-height:20px;
+    color:#bfbfbf;
+}
+blockquote cite:before {
+    content: '\2014 \00A0';
+}
+
+table{
+	font-size: 11px;
+	color: #333333;
+	border-width: 1px;
+	border-color: #999999;
+	border-collapse: collapse;
+}
+table th{
+	background-color:#c3dde0;
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #a9c6c9;
+}
+table tr{
+	background-color:#d4e3e5;
+}
+table td{
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #a9c6c9;
+}
+
+dl.wrapper1{
+	margin: 0;
+	padding: 0.5em;
+	width: 460px;
+	background-color: #ffffff;
+	font-size: 1em;
+}
+dt{
+	margin: 0;
+	padding: 0.5em;
+	font-weight: bold;
+	background-color: #e0e0e0;
+}
+dd{
+	margin: 0;
+	padding: 0;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+}
+dd .div1{
+	padding-left: 0.5em;
+	border-left: 1px solid #333;
+	font-size: 0.9em;
+	clear:both;
+}
+dd .div2{
+	color: #900;
+	font-size: 0.76em;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+	clear:both;
+}
+
+

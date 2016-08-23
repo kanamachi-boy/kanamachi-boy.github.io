@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>GitHub Pagesへjekyllで投稿してみる</title>
+<link rel="stylesheet" href="/css/ban.css">
+</head>
+<body>
+<h1>GitHub Pagesへjekyllで投稿してみる</h1>
+<span>投稿：22 Aug 2016</span><br />
+<br />
+<div class="post">
+<h2 id="jekyll">なぜjekyll？</h2>
+<p>.mdファイル（マークダウン）って意味があるのか？と思ってましたが、<br />
+GitHub Pagesの場合は、「枠組み」を作っておけば<br />
+後は、.mdを書いてgit pushしてあげるだけでblog風にできるらしい！<br />
+（GitHub Pagesの場合はサイト側のjekyllでHTML生成してくれる）<br />
+このために必要なのがjekyll（の知識）・・・と言うことで学習メモ。</p>
+
+<h2 id="section">枠組みの準備１</h2>
+<p>GitHubのアカウントを取得し、<br />
+ログインして、[例] kanamachi-boy.github.ioというリポジトリを作成。<br />
+（kanamachi-boyの部分はユーザーID。.github.ioはお約束。）</p>
+
+<p>PCにGitをインストールし、Git Bashを起動、<br />
+ローカル用ディレクトリを作る。<br />
+<code class="highlighter-rouge">mkdir kanamachi-boy.github.io</code></p>
+
+<p>そこへ移動<br />
+<code class="highlighter-rouge">cd kanamachi-boy.github.io</code></p>
+
+<p>初期化する（管理ファイル等が.gitに作られる。初回のみ）<br />
+<code class="highlighter-rouge">git init</code></p>
+
+<p>何かファイルを作成する。<br />
+（”Helllo World”と一行書いたindex.htmlでも良い）</p>
+
+<p>放って置くとwin風に改行してしまうので止める。<br />
+（文字コードはBOM無しUTF-8, 改行はLFが良いです。初回のみ）<br />
+<code class="highlighter-rouge">git config --global core.autoCRLF false</code></p>
+
+<p>変更・追加内容をindexに登録する。.（ドット）でディレクトリ以下全部指定。<br />
+<code class="highlighter-rouge">git add .</code></p>
+
+<p>indexに蓄積された変更・追加内容を一まとめに記録する。<br />
+（-m を付けないとコメント記述用にエディタが起動する。<br />
+そもそもキチンと履歴管理しないならコメント不要だが・・・）<br />
+<code class="highlighter-rouge">git commit -m "new"</code></p>
+
+<p>リモート（GitHubに作成したリポジトリ）に紐付けする。（初回のみ）<br />
+<code class="highlighter-rouge">git remote add origin git@github.com:kanamachi-boy/kanamachi-boy.github.io.git</code></p>
+
+<p>commitした内容をリモートへアップする<br />
+（二回目からは -u オプション不要）<br />
+<code class="highlighter-rouge">git push -u origin master</code></p>
+
+<p>これで、準備１は完了。<br />
+次に、必要なディレクトリ・ファイルをローカルに用意し<br />
+（この部分を準備２として後で説明します）<br />
+記事を.mdで書いて</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git add .
+git commit -m "up"
+git push
+</code></pre>
+</div>
+
+<p>するだけで、ブログ運用できます。</p>
+
+
+<br>
+<a href="/">[ 戻る ]</a>
+</div>
+
+
+</body>
+</html>
