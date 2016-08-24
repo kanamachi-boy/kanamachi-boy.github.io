@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>DBからExcelへ書き出し（汎用的）</title>
+<link rel="stylesheet" href="/css/ban.css">
+</head>
+<body>
+<h1>DBからExcelへ書き出し（汎用的）</h1>
+<div>
+	<div style="float: left"><span>投稿：25 Aug 2016</span></div>
+	<div style="text-align: right">
+	
+		<a href="/blogs/access/access03.html">前へ</a>
+	
+	
+	
+	<a href="/">[ Home ]</a>
+	</div>
+</div>
+
+<div class="post">
+<p>SQLを引数で渡すので、使いまわし可能。<br />
+書き込み先のExcelファイル、シート、書き込み開始位置、タイトルも引数で指定。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Public Function RsetToEXCEL(mSQL As String, mFile As String, mSheet As String, baseRow As Integer, baseCol As Integer, mTITLE As String) As Integer
+
+    '*************************************************************
+    '     SQLで得たレコードセットをEXCELに書き込み
+    '*************************************************************
+    
+    Dim cnn As New ADODB.Connection
+    Dim myRS As New ADODB.Recordset
+    
+    Dim myXLS As Excel.Application
+    Dim myWKB As Excel.Workbook
+    Dim myWKS As Worksheet
+    Dim OpenFileName As String
+    Dim fCnt As Integer, i As Integer, j As Integer, rCnt As Integer
+    
+    Set myXLS = New Excel.Application
+    myXLS.Visible = False
+    Set myWKB = myXLS.Workbooks.Open(mFile)
+    Set myWKS = myWKB.Sheets(mSheet)
+    
+    Set cnn = CurrentProject.Connection '対象は現DBとする。
+    myRS.Open mSQL, cnn
+    fCnt = myRS.Fields.Count
+    
+    With myWKS
+        'タイトルの有無によってデータの書出し行を変える。
+        If mTITLE = "" Then 'タイトルが無い時はそのまま
+            i = 0
+        Else
+            .Cells(baseRow, 2).Value = mTITLE  'タイトルがあるときは2行下げる
+            i = 2
+        End If
+        
+        While Not myRS.EOF
+            For j = 0 To fCnt - 1
+                If rCnt = 0 Then .Cells(i + baseRow, j + baseCol).Value = myRS.Fields(j).Name
+                .Cells(i + baseRow + 1, j + baseCol).Value = myRS.Fields(j).Value
+            Next j
+            myRS.MoveNext
+            i = i + 1
+            rCnt = rCnt + 1
+            If i &gt; 20 And i Mod 20 = 1 Then
+                Form_原価共通.Disp_Label (".")
+            End If
+        Wend
+    End With
+    
+    myXLS.DisplayAlerts = False
+    myWKB.Save
+    myXLS.DisplayAlerts = True
+    myXLS.Quit
+    
+    RsetToEXCEL = rCnt 'レコード数を返す
+    
+End Function
+</code></pre>
+</div>
+
+<br>
+<a href="/">[ Home ]</a>
+
+	<a href="/blogs/access/access03.html">前へ</a>
+
+
+</div>
+
+
+</body>
+</html>
