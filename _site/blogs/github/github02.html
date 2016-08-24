@@ -2,20 +2,98 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<title>GitHub Pagesへjekyllで投稿してみる２</title>
+<title>GitHub Pagesへjekyllで投稿してみる（２）</title>
 <link rel="stylesheet" href="/css/ban.css">
 </head>
 <body>
-<h1>GitHub Pagesへjekyllで投稿してみる２</h1>
-<span>投稿：23 Aug 2016</span><br />
-<br />
+<h1>GitHub Pagesへjekyllで投稿してみる（２）</h1>
+<div>
+	<div style="float: left"><span>投稿：22 Aug 2016</span></div>
+	<div style="text-align: right">
+	
+		<a href="/blogs/github/github01.html">前へ</a>
+	
+	
+		<a href="/blogs/github/github03.html">次へ</a>
+	
+	
+	<a href="/">[ Home ]</a>
+	</div>
+</div>
+
 <div class="post">
 <h2 id="section">枠組みを作ります</h2>
+<p>最低限、下図の例のようなディレクトリ構造が必要です。</p>
+
+<ul>
+  <li>設定ファイル（_config.yml）無しでもデフォルトで動作しますが、早晩必要になるでしょう。</li>
+  <li>スタイルシート（css以下）は動作上必須ではありませんが、さすがに無しでは寂しい。</li>
+  <li>レイアウト（_layouts）無しでも生成は可能ですが、blogとして使うなら非現実的です。</li>
+  <li>通常、_postsに記事を置きます。日付を先頭に付けるのはお約束のようです。<br />
+もちろん、この下にディレクトリを置いても可。</li>
+  <li>ローカルでbuildしないなら_siteは不要、jekyllをインストールする必要もありませんが<br />
+git pushしないと変更結果を確認できないので実用的ではないかも。</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>└─kanamachi-boy.github.io
+    │  _config.yml
+    │  index.html
+    │
+    ├─css
+    │      ban.css
+    │
+    ├─_layouts
+    │      default.html
+    │      post.html
+    │
+    ├─_posts
+    │      2016-08-22-github01.md
+    │      2016-08-23-golf01.md
+    │
+    └─_site
+</code></pre>
+</div>
+
+<p>動作テストであれば、次のようなindex.htmlを作成してGitHubへpushすれば</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>---
+---
+こんにちは。
+</code></pre>
+</div>
+
+<p>GitHub側でHTMLを生成してくれるので<br />
+ブラウザから <code class="highlighter-rouge">kanamachi-boy.github.io</code>で動作確認できます。<br />
+普通は、</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>---
+layout: post
+title: GitHub Pagesへjekyllで投稿してみる２
+---
+こんにちは。
+</code></pre>
+</div>
+
+<p>のようにディレクティブ（YAML Front Matter）を書きますが、空でもbuildはします。<br />
+ファイル名をindex.mdにしてもOKです。<br />
+（拡張子ではなく先頭二本の<code class="highlighter-rouge">---</code>の有無でbuild対象か判定しているらしい。）</p>
+
+<h2 id="section-1">少し体裁を整える</h2>
+<p>layoutの利用</p>
+
 <p>_config.yml<br />
 permalinkの変更</p>
 
+<p><a href="http://melborne.github.io/2013/05/20/now-the-time-to-start-jekyll/">参考になるサイト</a></p>
+
 <br>
-<a href="/">[ 戻る ]</a>
+<a href="/">[ Home ]</a>
+
+	<a href="/blogs/github/github01.html">前へ</a>
+
+
+	<a href="/blogs/github/github03.html">次へ</a>
+
 </div>
 
 

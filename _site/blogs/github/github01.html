@@ -2,41 +2,55 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<title>GitHub Pagesへjekyllで投稿してみる</title>
+<title>GitHub Pagesへjekyllで投稿してみる（１）</title>
 <link rel="stylesheet" href="/css/ban.css">
 </head>
 <body>
-<h1>GitHub Pagesへjekyllで投稿してみる</h1>
-<span>投稿：22 Aug 2016</span><br />
-<br />
+<h1>GitHub Pagesへjekyllで投稿してみる（１）</h1>
+<div>
+	<div style="float: left"><span>投稿：22 Aug 2016</span></div>
+	<div style="text-align: right">
+	
+	
+		<a href="/blogs/github/github02.html">次へ</a>
+	
+	
+	<a href="/">[ Home ]</a>
+	</div>
+</div>
+
 <div class="post">
 <h2 id="jekyll">なぜjekyll？</h2>
-<p>.mdファイル（マークダウン）って意味があるのか？と思ってましたが、<br />
+<p>.mdファイル（マークダウン）ってどんな意味があるのか？と思ってましたが、<br />
 GitHub Pagesの場合は、「枠組み」を作っておけば<br />
 後は、.mdを書いてgit pushしてあげるだけでblog風にできるらしい！<br />
-（GitHub Pagesの場合はサイト側のjekyllでHTML生成してくれる）<br />
+（つまりサイト側のjekyllでHTML生成してくれる）<br />
 このために必要なのがjekyll（の知識）・・・と言うことで学習メモ。</p>
 
-<h2 id="section">枠組みの準備１</h2>
+<h2 id="section">枠組みの準備</h2>
 <p>GitHubのアカウントを取得し、<br />
 ログインして、[例] kanamachi-boy.github.ioというリポジトリを作成。<br />
-（kanamachi-boyの部分はユーザーID。.github.ioはお約束。）</p>
+（kanamachi-boyの部分はユーザーID、.github.ioはお約束。）<br />
+	⇒ここまで詳しくは<a href="http://techacademy.jp/magazine/6235">こちら</a>を参照。</p>
 
-<p>PCにGitをインストールし、Git Bashを起動、<br />
-ローカル用ディレクトリを作る。<br />
+<p>PCに<a href="https://git-for-windows.github.io/">Git for windows</a>をインストールし、Git Bashを起動、<br />
+ローカルリポジトリ用のディレクトリを作る。<br />
+（C:\Users\UserName\Documentsの下など）<br />
 <code class="highlighter-rouge">mkdir kanamachi-boy.github.io</code></p>
 
 <p>そこへ移動<br />
 <code class="highlighter-rouge">cd kanamachi-boy.github.io</code></p>
 
-<p>初期化する（管理ファイル等が.gitに作られる。初回のみ）<br />
+<p>初期化する<br />
+（管理用の.gitディレクトリ以下が作られる。<br />
+ちなみにgit管理を止める時は、.gitごと削除すれば良い。）<br />
 <code class="highlighter-rouge">git init</code></p>
 
-<p>何かファイルを作成する。<br />
+<p>テストとして何かファイルを作成する。<br />
 （”Helllo World”と一行書いたindex.htmlでも良い）</p>
 
 <p>放って置くとwin風に改行してしまうので止める。<br />
-（文字コードはBOM無しUTF-8, 改行はLFが良いです。初回のみ）<br />
+（今後とも、文字コードはBOM無しUTF-8, 改行はLFが良いです。）<br />
 <code class="highlighter-rouge">git config --global core.autoCRLF false</code></p>
 
 <p>変更・追加内容をindexに登録する。.（ドット）でディレクトリ以下全部指定。<br />
@@ -44,7 +58,7 @@ GitHub Pagesの場合は、「枠組み」を作っておけば<br />
 
 <p>indexに蓄積された変更・追加内容を一まとめに記録する。<br />
 （-m を付けないとコメント記述用にエディタが起動する。<br />
-そもそもキチンと履歴管理しないならコメント不要だが・・・）<br />
+キチンと履歴管理しないならコメントは適当に付ける）<br />
 <code class="highlighter-rouge">git commit -m "new"</code></p>
 
 <p>リモート（GitHubに作成したリポジトリ）に紐付けする。（初回のみ）<br />
@@ -54,9 +68,9 @@ GitHub Pagesの場合は、「枠組み」を作っておけば<br />
 （二回目からは -u オプション不要）<br />
 <code class="highlighter-rouge">git push -u origin master</code></p>
 
-<p>これで、準備１は完了。<br />
+<p>これで、（１）は完了。<br />
 次に、必要なディレクトリ・ファイルをローカルに用意し<br />
-（この部分を準備２として後で説明します）<br />
+（この部分は次のページで説明します）<br />
 記事を.mdで書いて</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>git add .
@@ -69,7 +83,11 @@ git push
 
 
 <br>
-<a href="/">[ 戻る ]</a>
+<a href="/">[ Home ]</a>
+
+
+	<a href="/blogs/github/github02.html">次へ</a>
+
 </div>
 
 
