@@ -3,10 +3,12 @@ layout: default
 title: kanamachi-boy
 ---
 
-<div class="posts">
-<h1>{{ page.title }}</h1>
 
+<h1>{{ page.title }}</h1>
+<div class="post">
+kanamachiとは葛飾区金町のことですが、住んでもいなければ boy でもないオヤジが綴るblogです。
 <h2>GitHub</h2>
+Git（ギット）とGitHub、jekyllなどについてのメモ。このblogもこれらで構築されています。
 <ul>
 {% for post in site.categories.github %}
     <li><span>{{ post.date | date_to_string }}</span>&nbsp;&raquo;&nbsp;<a href="{{ post.url }}">{{ post.title }}</a></li>
@@ -14,6 +16,7 @@ title: kanamachi-boy
 </ul>
 
 <h2>Android</h2>
+学習して気づいた事のメモ（準備中）と、自作したアプリを紹介しています。
 <ul>
 {% for post in site.categories.android %}
     <li><span>{{ post.date | date_to_string }}</span>&nbsp;&raquo;&nbsp;<a href="{{ post.url }}">{{ post.title }}</a></li>
@@ -21,13 +24,23 @@ title: kanamachi-boy
 </ul>
 
 <h2>Access</h2>
+COMベースのTipsはこちら。従ってExcelVBAも当面こちらに掲載。
 <ul>
 {% for post in site.categories.access %}
     <li><span>{{ post.date | date_to_string }}</span>&nbsp;&raquo;&nbsp;<a href="{{ post.url }}">{{ post.title }}</a></li>
 {% endfor %}
 </ul>
 
+<h2>.NET</h2>
+.NET Framework（当面vb.netだけ）と、SQLserverに関する学習メモはこちら。
+<ul>
+{% for post in site.categories.net %}
+    <li><span>{{ post.date | date_to_string }}</span>&nbsp;&raquo;&nbsp;<a href="{{ post.url }}">{{ post.title }}</a></li>
+{% endfor %}
+</ul>
+
 <h2>Golf</h2>
+プログラムと無縁です。EverNoteに貯めてある記事も少しずつ移植してゆく予定。
 <ul>
 {% for post in site.categories.golf %}
     <li><span>{{ post.date | date_to_string }}</span>&nbsp;&raquo;&nbsp;<a href="{{ post.url }}">{{ post.title }}</a></li>
