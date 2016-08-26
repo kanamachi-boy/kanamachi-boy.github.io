@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <title>ファイル選択ダイアログ</title>
 <link rel="stylesheet" href="/css/ban.css">
+<link rel="stylesheet" href="/css/syntax.css">
 </head>
 <body>
 <h1>ファイル選択ダイアログ</h1>
@@ -22,15 +23,14 @@
 </div>
 
 <div class="post">
-<p>ファイルタイプを引数で設定するファイル選択ダイアログ。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>Public Function FileSelect(mType As Integer, mIniDir As String) As String
+<p>ファイルタイプを引数で設定するファイル選択ダイアログ。  </p>
+<div class="highlight"><pre><code class="language-" data-lang="">Public Function FileSelect(mType As Integer, mIniDir As String) As String
     '*************************************************************
     '    ファイル選択ダイアログ
     '*************************************************************
     'Microsoft Office 10.0 Object Libraryを参照設定すること。
     Dim varSelectedFile As Variant
-    
+
     With Application.FileDialog(msoFileDialogFilePicker)
         'ダイアログタイトル名
         .Title = "ファイルを選択してください"
@@ -47,17 +47,17 @@
         Else
             .Filters.Add "全てのファイル", "*.*"
         End If
-            
+
         '複数ファイル選択を可能にする場合はTrue、不可の場合はFalse。
         .AllowMultiSelect = False
-        
+
         '最初に開くファイル設定。
         If mIniDir = "" Then
             .InitialFileName = CurrentProject.Path
         Else
             .InitialFileName = mIniDir
         End If
-            
+
         If .Show = -1 Then 'ファイルが選択されれば　-1 を返します。
             For Each varSelectedFile In .SelectedItems
                 FileSelect = varSelectedFile
@@ -66,11 +66,9 @@
             FileSelect = ""
         End If
     End With
-    
-End Function
-</code></pre>
-</div>
 
+End Function
+</code></pre></div>
 <br>
 pre = access  this = access
 <a href="/">[ Home ]</a>

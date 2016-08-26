@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <title>GitHub Pagesへjekyllで投稿してみる（１）</title>
 <link rel="stylesheet" href="/css/ban.css">
+<link rel="stylesheet" href="/css/syntax.css">
 </head>
 <body>
 <h1>GitHub Pagesへjekyllで投稿してみる（１）</h1>
@@ -20,67 +21,66 @@
 </div>
 
 <div class="post">
-<h2 id="jekyll">なぜjekyll？</h2>
-<p>.mdファイル（マークダウン）ってどんな意味があるのか？と思ってましたが、<br />
-GitHub Pagesの場合は、「枠組み」を作っておけば<br />
-後は、.mdを書いてgit pushしてあげるだけでblog風にできるらしい！<br />
-（つまりサイト側のjekyllでHTML生成してくれる）<br />
-このために必要なのがjekyll（の知識）・・・と言うことで学習メモ。</p>
+<h2>なぜjekyll？</h2>
 
-<h2 id="section">枠組みの準備</h2>
-<p>GitHubのアカウントを取得し、<br />
-ログインして、[例] kanamachi-boy.github.ioというリポジトリを作成。<br />
-（kanamachi-boyの部分はユーザーID、.github.ioはお約束。）<br />
-	⇒ここまで詳しくは<a href="http://techacademy.jp/magazine/6235">こちら</a>を参照。</p>
+<p>.mdファイル（マークダウン）ってどんな意味があるのか？と思ってましたが、<br>
+GitHub Pagesの場合は、「枠組み」を作っておけば<br>
+後は、.mdを書いてgit pushしてあげるだけでblog風にできるらしい！<br>
+（つまりサイト側のjekyllでHTML生成してくれる）<br>
+このために必要なのがjekyll（の知識）・・・と言うことで学習メモ。  </p>
 
-<p>PCに<a href="https://git-for-windows.github.io/">Git for windows</a>をインストールし、Git Bashを起動、<br />
-ローカルリポジトリ用のディレクトリを作る。<br />
-（C:\Users\UserName\Documentsの下など）<br />
-<code class="highlighter-rouge">mkdir kanamachi-boy.github.io</code></p>
+<h2>枠組みの準備</h2>
 
-<p>そこへ移動<br />
-<code class="highlighter-rouge">cd kanamachi-boy.github.io</code></p>
+<p>GitHubのアカウントを取得し、<br>
+ログインして、[例] kanamachi-boy.github.ioというリポジトリを作成。<br>
+（kanamachi-boyの部分はユーザーID、.github.ioはお約束。）<br>
+    ⇒ここまで詳しくは<a href="http://techacademy.jp/magazine/6235">こちら</a>を参照。  </p>
 
-<p>初期化する<br />
-（管理用の.gitディレクトリ以下が作られる。<br />
-ちなみにgit管理を止める時は、.gitごと削除すれば良い。）<br />
-<code class="highlighter-rouge">git init</code></p>
+<p>PCに<a href="https://git-for-windows.github.io/">Git for windows</a>をインストールし、Git Bashを起動、<br>
+ローカルリポジトリ用のディレクトリを作る。<br>
+（C:\Users\UserName\Documentsの下など）  </p>
 
-<p>テストとして何かファイルを作成する。<br />
-（”Helllo World”と一行書いたindex.htmlでも良い）</p>
+<p><code>$ mkdir kanamachi-boy.github.io</code></p>
 
-<p>放って置くとwin風に改行してしまうので止める。<br />
-（今後とも、文字コードはBOM無しUTF-8, 改行はLFが良いです。）<br />
-<code class="highlighter-rouge">git config --global core.autoCRLF false</code></p>
+<p>そこへ移動<br>
+<code>$ cd kanamachi-boy.github.io</code>  </p>
 
-<p>変更・追加内容をindexに登録する。.（ドット）でディレクトリ以下全部指定。<br />
-<code class="highlighter-rouge">git add .</code></p>
+<p>初期化する<br>
+（管理用の.gitディレクトリ以下が作られる。<br>
+ちなみにgit管理を止める時は、.gitごと削除すれば良い。）<br>
+<code>$ git init</code>  </p>
 
-<p>indexに蓄積された変更・追加内容を一まとめに記録する。<br />
-（-m を付けないとコメント記述用にエディタが起動する。<br />
-キチンと履歴管理しないならコメントは適当に付ける）<br />
-<code class="highlighter-rouge">git commit -m "new"</code></p>
+<p>テストとして何かファイルを作成する。<br>
+（&quot;Helllo World&quot;と一行書いたindex.htmlでも良い）  </p>
 
-<p>リモート（GitHubに作成したリポジトリ）に紐付けする。（初回のみ）<br />
-<code class="highlighter-rouge">git remote add origin git@github.com:kanamachi-boy/kanamachi-boy.github.io.git</code></p>
+<p>放って置くとwin風に改行してしまうので止める。<br>
+（今後とも、文字コードはBOM無しUTF-8, 改行はLFが良いです。）<br>
+<code>$ git config --global core.autoCRLF false</code>  </p>
 
-<p>commitした内容をリモートへアップする<br />
-（二回目からは -u オプション不要）<br />
-<code class="highlighter-rouge">git push -u origin master</code></p>
+<p>変更・追加内容をindexに登録する。.（ドット）でディレクトリ以下全部指定。<br>
+<code>$ git add .</code>  </p>
 
-<p>これで、（１）は完了。<br />
-次に、必要なディレクトリ・ファイルをローカルに用意し<br />
-（この部分は次のページで説明します）<br />
-記事を.mdで書いて</p>
+<p>indexに蓄積された変更・追加内容を一まとめに記録する。<br>
+（-m を付けないとコメント記述用にエディタが起動する。<br>
+キチンと履歴管理しないならコメントは適当に付ける）<br>
+<code>$ git commit -m &quot;new&quot;</code>  </p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>git add .
-git commit -m "up"
-git push
-</code></pre>
-</div>
+<p>リモート（GitHubに作成したリポジトリ）に紐付けする。（初回のみ）<br>
+<code>$ git remote add origin git@github.com:kanamachi-boy/kanamachi-boy.github.io.git</code>  </p>
 
-<p>するだけで、ブログ運用できます。</p>
+<p>commitした内容をリモートへアップする<br>
+（二回目からは -u オプション不要）<br>
+<code>$ git push -u origin master</code>  </p>
 
+<p>これで、（１）は完了。<br>
+次に、必要なディレクトリ・ファイルをローカルに用意し<br>
+（この部分は次のページで説明します）<br>
+記事を.mdで書いて  </p>
+<div class="highlight"><pre><code class="language-" data-lang="">$ git add .
+$ git commit -m "up"
+$ git push
+</code></pre></div>
+<p>するだけで、ブログ運用できます。  </p>
 
 <br>
 pre =   this = github

@@ -59,9 +59,9 @@ h2 {	/* アイコン付き */
 }
 
 
-code2 {
-  font: 14px Monaco,"Courier New","DejaVu Sans Mono","Bitstream Vera Sans Mono",monospace;
-  font-size: 1.0em;
+code {
+  font-family: 'メイリオ',Meiryo,'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','ＭＳ Ｐゴシック',sans-serif !important;
+  font-size: 0.9em;
   color: #52595d;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;

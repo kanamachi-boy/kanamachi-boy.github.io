@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <title>レポートでPDF出力する（イマイチ）</title>
 <link rel="stylesheet" href="/css/ban.css">
+<link rel="stylesheet" href="/css/syntax.css">
 </head>
 <body>
 <h1>レポートでPDF出力する（イマイチ）</h1>
@@ -20,80 +21,77 @@
 </div>
 
 <div class="post">
-<p>ペーパーレス時代としては良くありそうな、DBからSQLで抽出しそれをPDFに出力です。<br />
-キモの部分は、</p>
+<p>ペーパーレス時代としては良くありそうな、DBからSQLで抽出しそれをPDFに出力です。<br>
+キモの部分は、  </p>
 
 <ol>
-  <li>レポートをデザインする。</li>
-  <li>レポート用のクエリを適当に作成する。（レポートの体裁を確認できる程度）</li>
-  <li>作成したクエリをレポートのレコードソースに設定する。
- ここまではAccessのデザインで作成。</li>
-  <li>VBEで条件を変えながらSQLを生成し、それを上記クエリに設定する</li>
-  <li>DoCmdでPDFに出力を繰り返す。</li>
+<li>レポートをデザインする。</li>
+<li>レポート用のクエリを適当に作成する。（レポートの体裁を確認できる程度）</li>
+<li>作成したクエリをレポートのレコードソースに設定する。
+ここまではAccessのデザインで作成。</li>
+<li>VBEで条件を変えながらSQLを生成し、それを上記クエリに設定する</li>
+<li>DoCmdでPDFに出力を繰り返す。</li>
 </ol>
 
-<p>これで、例えば「得意先別受注リスト」を作成します。<br />
-スマートとは言えませんが、</p>
+<p>これで、例えば「得意先別受注リスト」を作成します。<br>
+スマートとは言えませんが、  </p>
 
 <ul>
-  <li>レポートのソースを含むプロパティは、レポートを開いてないと変更できないようだ。</li>
-  <li>つまり、DoCmd.OutputToでなく、DoCmd.OpenReportでないと変更できない。</li>
-  <li>しかし、DoCmd.OpenReportメソッドはPDF出力をサポートしていない。</li>
+<li>レポートのソースを含むプロパティは、レポートを開いてないと変更できないようだ。</li>
+<li>つまり、DoCmd.OutputToでなく、DoCmd.OpenReportでないと変更できない。</li>
+<li>しかし、DoCmd.OpenReportメソッドはPDF出力をサポートしていない。</li>
 </ul>
 
-<p>残念です。何とかならないか研究課題とします。<br />
-なお、DoCmd.OutputTo acOutputReport, レポート名, acFormatPDF, 出力パス<br />
-はAccess2007以降でないと使えないようなのでご注意を。</p>
+<p>残念です。何とかならないか研究課題とします。<br>
+なお、DoCmd.OutputTo acOutputReport, レポート名, acFormatPDF, 出力パス<br>
+はAccess2007以降でないと使えないようなのでご注意を。  </p>
+<div class="highlight"><pre><code class="language-vb" data-lang="vb"><span class="k">Sub</span> <span class="nf">makePdfFiles3</span><span class="p">()</span>
+    <span class="c1">'保存されているクエリ、テーブル、レポート</span>
+    <span class="k">Const</span> <span class="nv">QRY_NAME</span> <span class="o">=</span> <span class="s">"q_blog"</span>
+    <span class="k">Const</span> <span class="nv">TBL_NAME</span> <span class="o">=</span> <span class="s">"t_blog"</span>
+    <span class="k">Const</span> <span class="nv">RPT_NAME</span> <span class="o">=</span> <span class="s">"r_blog"</span>
+    <span class="k">Dim</span> <span class="nv">PDF_PATH</span> <span class="ow">As</span> <span class="kt">String</span>
+    <span class="k">Dim</span> <span class="nv">dbs</span> <span class="ow">As</span> <span class="n">Database</span>
+    <span class="k">Dim</span> <span class="nv">qdf</span> <span class="ow">As</span> <span class="n">QueryDef</span>
+    <span class="k">Dim</span> <span class="nv">orgSQL</span> <span class="ow">As</span> <span class="kt">String</span><span class="p">,</span> <span class="n">exeSQL</span> <span class="ow">As</span> <span class="kt">String</span>
+    <span class="k">Dim</span> <span class="nv">strWHR</span> <span class="ow">As</span> <span class="kt">String</span>
+    <span class="k">Dim</span> <span class="nv">Cnn</span> <span class="ow">As</span> <span class="k">New</span> <span class="n">ADODB</span><span class="p">.</span><span class="n">Connection</span>
+    <span class="k">Dim</span> <span class="nv">rs</span> <span class="ow">As</span> <span class="k">New</span> <span class="n">ADODB</span><span class="p">.</span><span class="n">Recordset</span>
+    <span class="c1">'PDFは実行パスへ出力</span>
+    <span class="n">PDF_PATH</span> <span class="o">=</span> <span class="n">CurrentProject</span><span class="p">.</span><span class="n">Path</span> <span class="o">+</span> <span class="s">"\"</span>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>Sub makePdfFiles3()
-    '保存されているクエリ、テーブル、レポート
-    Const QRY_NAME = "q_blog"
-    Const TBL_NAME = "t_blog"
-    Const RPT_NAME = "r_blog"
-    Dim PDF_PATH As String
-    Dim dbs As Database
-    Dim qdf As QueryDef
-    Dim orgSQL As String, exeSQL As String
-    Dim strWHR As String
-    Dim Cnn As New ADODB.Connection
-    Dim rs As New ADODB.Recordset
-    'PDFは実行パスへ出力
-    PDF_PATH = CurrentProject.Path + "\"
-    
-    'Microsoft ActiveX Data Objects 6.1Libraryの参照設定が必要
-    Set dbs = CurrentDb
-    Set qdf = dbs.QueryDefs(QRY_NAME)
-    Set Cnn = CurrentProject.Connection
-    'オリジナルSQLを退避しておく
-    orgSQL = qdf.SQL
-    'ページを初期化（レポートで使用）
-    rPage = 0
-    'グループ名をGET
-    rs.Open "SELECT * FROM t_divname ORDER BY div;", Cnn, adOpenStatic, adLockReadOnly
-    'グループ毎に出力
-    Do While Not rs.EOF
-        '※テーブルをJOINする時、INNER JOINだとソート失敗する！⇒LEFT JOINで解決
-        exeSQL = "SELECT t_blog.serial, t_blog.division, t_blog.title," _
-                &amp; "Format(hizuke,'yyyy/mm/dd') AS orgday, t_divname.dname" _
-                &amp; " FROM t_blog LEFT JOIN t_divname ON t_blog.division = t_divname.div" _
-                &amp; " WHERE division='" + rs!div + "' ORDER BY serial;"
-        qdf.SQL = exeSQL
-        pdfName = rs!div + "_" + rs!dname
-        ’★RPT_NAME（保存されているr_blog）は、sourceとしてq_blogを持っている。
-        '★そのq_blogのSQLを都度差し替えて（条件を変えて）レポートを作成する。
-        DoCmd.OutputTo acOutputReport, RPT_NAME, acFormatPDF, PDF_PATH &amp; pdfName &amp; ".pdf"
-        DoCmd.Close
-         
-        rs.MoveNext
-    Loop
-    
-    '上記ループ内でSQLが置き換えられてしまったので退避していたOriginalに戻す。
-    qdf.SQL = orgSQL
+    <span class="c1">'Microsoft ActiveX Data Objects 6.1Libraryの参照設定が必要</span>
+    <span class="k">Set</span> <span class="n">dbs</span> <span class="o">=</span> <span class="n">CurrentDb</span>
+    <span class="k">Set</span> <span class="n">qdf</span> <span class="o">=</span> <span class="n">dbs</span><span class="p">.</span><span class="n">QueryDefs</span><span class="p">(</span><span class="n">QRY_NAME</span><span class="p">)</span>
+    <span class="k">Set</span> <span class="n">Cnn</span> <span class="o">=</span> <span class="n">CurrentProject</span><span class="p">.</span><span class="n">Connection</span>
+    <span class="c1">'オリジナルSQLを退避しておく</span>
+    <span class="n">orgSQL</span> <span class="o">=</span> <span class="n">qdf</span><span class="p">.</span><span class="n">SQL</span>
+    <span class="c1">'ページを初期化（レポートで使用）</span>
+    <span class="n">rPage</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1">'グループ名をGET</span>
+    <span class="n">rs</span><span class="p">.</span><span class="n">Open</span> <span class="s">"SELECT * FROM t_divname ORDER BY div;"</span><span class="p">,</span> <span class="n">Cnn</span><span class="p">,</span> <span class="n">adOpenStatic</span><span class="p">,</span> <span class="n">adLockReadOnly</span>
+    <span class="c1">'グループ毎に出力</span>
+    <span class="k">Do</span> <span class="k">While</span> <span class="k">Not</span> <span class="n">rs</span><span class="p">.</span><span class="n">EOF</span>
+        <span class="c1">'※テーブルをJOINする時、INNER JOINだとソート失敗する！⇒LEFT JOINで解決</span>
+        <span class="n">exeSQL</span> <span class="o">=</span> <span class="s">"SELECT t_blog.serial, t_blog.division, t_blog.title,"</span> <span class="n">_</span>
+                <span class="o">&amp;</span> <span class="s">"Format(hizuke,'yyyy/mm/dd') AS orgday, t_divname.dname"</span> <span class="n">_</span>
+                <span class="o">&amp;</span> <span class="s">" FROM t_blog LEFT JOIN t_divname ON t_blog.division = t_divname.div"</span> <span class="n">_</span>
+                <span class="o">&amp;</span> <span class="s">" WHERE division='"</span> <span class="o">+</span> <span class="n">rs!div</span> <span class="o">+</span> <span class="s">"' ORDER BY serial;"</span>
+        <span class="n">qdf</span><span class="p">.</span><span class="n">SQL</span> <span class="o">=</span> <span class="n">exeSQL</span>
+        <span class="n">pdfName</span> <span class="o">=</span> <span class="n">rs!div</span> <span class="o">+</span> <span class="s">"_"</span> <span class="o">+</span> <span class="n">rs!dname</span>
+        <span class="err">’★</span><span class="n">RPT_NAME</span><span class="err">（保存されている</span><span class="n">r_blog</span><span class="err">）は、</span><span class="n">source</span><span class="err">として</span><span class="n">q_blog</span><span class="err">を持っている。</span>
+        <span class="c1">'★そのq_blogのSQLを都度差し替えて（条件を変えて）レポートを作成する。</span>
+        <span class="n">DoCmd</span><span class="p">.</span><span class="n">OutputTo</span> <span class="n">acOutputReport</span><span class="p">,</span> <span class="n">RPT_NAME</span><span class="p">,</span> <span class="n">acFormatPDF</span><span class="p">,</span> <span class="n">PDF_PATH</span> <span class="o">&amp;</span> <span class="n">pdfName</span> <span class="o">&amp;</span> <span class="s">".pdf"</span>
+        <span class="n">DoCmd</span><span class="p">.</span><span class="n">Close</span>
 
-End Sub
-</code></pre>
-</div>
+        <span class="n">rs</span><span class="p">.</span><span class="n">MoveNext</span>
+    <span class="k">Loop</span>
 
+    <span class="c1">'上記ループ内でSQLが置き換えられてしまったので退避していたOriginalに戻す。</span>
+    <span class="n">qdf</span><span class="p">.</span><span class="n">SQL</span> <span class="o">=</span> <span class="n">orgSQL</span>
+
+<span class="k">End</span> <span class="k">Sub</span>
+</code></pre></div>
 <br>
 pre = access  this = access
 <a href="/">[ Home ]</a>
