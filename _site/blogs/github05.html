@@ -1,0 +1,44 @@
+<p><code class="highlighter-rouge">git pull --rebase</code><br />
+rebaseを付けないとブランチがたくさんできてしまう。<br />
+⇒</p>
+
+<p><code class="highlighter-rouge">git rebase -i</code><br />
+<code class="highlighter-rouge">git checkout -b branch</code><br />
+<code class="highlighter-rouge">git merge branch</code><br />
+mergeとrebaseの違い。<br />
+リベースはあくまでもプッシュする前のコミットをきれいにするための方法であるととらえ、<br />
+リベースするのはまだ公開していないコミットのみに限定するようにしている限りはすべてがうまく進みます。</p>
+
+<p><a href="http://liginc.co.jp/web/tool/79390">初心者でもわかるリベース</a><br />
+リベース＝コミットが綺麗になる。</p>
+
+<p><code class="highlighter-rouge">issue</code>  作業内容の細分化<br />
+commit messageに#付き数字でissueと紐付け？</p>
+
+<p>pull request<br />
+New organization</p>
+
+<p>共同開発の種類</p>
+
+<ul>
+  <li>共有レポジトリ
+    <ul>
+      <li>GitHub Flow</li>
+      <li><a href="http://blog.qnyp.com/2013/05/28/pull-request-for-github-beginners/">共有式Pull Request</a></li>
+      <li>同じレポジトリのブランチ同士でPull Requestする</li>
+    </ul>
+  </li>
+  <li>リポジトリのフォーク
+    <ul>
+      <li>不特定多数で行う前提？</li>
+      <li>フォーク（自分のGitHubアカウント内）</li>
+      <li>クローン（上記をローカルに）※ここまでは初回だけ</li>
+      <li>クローン内で（勝手に）作業</li>
+      <li>commit</li>
+      <li>フォークしたリポジトリから、オリジナルへPull Request<br />
+  （共有レポジトリではない＝直接書き込めないので）
+  （→オリジナル管理者に、プルによる自分のフォークとの同期をお願いする）</li>
+    </ul>
+  </li>
+</ul>
+
