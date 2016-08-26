@@ -23,56 +23,61 @@
 </div>
 
 <div class="post">
-<h2>体裁を整える（続き）</h2>
-
+<h2 id="section">体裁を整える（続き）</h2>
 <p>次に各記事を見てみます。
 _postsに元になる.mdファイルがあります。</p>
-<div class="highlight"><pre><code class="language-" data-lang="">---
+
+<div class="highlighter-rouge"><pre class="highlight"><code>---
 layout: post
 title: GitHub Pagesへjekyllで投稿してみる（３）
 ---
 ## 見出し
 ここから本文
-</code></pre></div>
+</code></pre>
+</div>
 <p>この記事が使うテンプレート（layout）はpost.htmlとあります。</p>
-<div class="highlight"><pre><code class="language-" data-lang="">---
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code>---
 layout: default
 ---
 
-&lt;h1&gt;{{ page.title }}&lt;/h1&gt;
-&lt;div&gt;
-&lt;span&gt;投稿日：{{ page.date | date_to_string }}&lt;/span&gt;
+<span class="nt">&lt;h1&gt;</span>{{ page.title }}<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;div&gt;</span>
+<span class="nt">&lt;span&gt;</span>投稿日：{{ page.date | date_to_string }}<span class="nt">&lt;/span&gt;</span>
 {{ content }}
-&lt;br&gt;
-&lt;a href="/"&gt;[ Home ]&lt;/a&gt;
-&lt;/div&gt;
+<span class="nt">&lt;br&gt;</span>
+<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/"</span><span class="nt">&gt;</span>[ Home ]<span class="nt">&lt;/a&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
 
-</code></pre></div>
-<p>post.htmlはさらにdefault.htmlを使うという入れ子になっているので、<br>
+</code></pre>
+</div>
+<p>post.htmlはさらにdefault.htmlを使うという入れ子になっているので、<br />
 元の記事をpost.htmlに挿入、さらにそれをdefault.htmlに挿入して、</p>
-<div class="highlight"><pre><code class="language-none" data-lang="none">&lt;!doctype html&gt;
-&lt;html lang="ja"&gt;
-&lt;head&gt;
-&lt;meta charset="utf-8"&gt;
-&lt;title&gt;GitHub Pagesへjekyllで投稿してみる（３）&lt;/title&gt;
-&lt;link rel="stylesheet" href="/css/ban.css"&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;h1&gt;GitHub Pagesへjekyllで投稿してみる（３）&lt;/h1&gt;
-&lt;div&gt;
-&lt;span&gt;投稿日：22 Aug 2016&lt;/span&gt;
-&lt;h2&gt;見出し&lt;/h2&gt;
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"ja"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>GitHub Pagesへjekyllで投稿してみる（３）<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">href=</span><span class="s">"/css/ban.css"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;h1&gt;</span>GitHub Pagesへjekyllで投稿してみる（３）<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;div&gt;</span>
+<span class="nt">&lt;span&gt;</span>投稿日：22 Aug 2016<span class="nt">&lt;/span&gt;</span>
+<span class="nt">&lt;h2&gt;</span>見出し<span class="nt">&lt;/h2&gt;</span>
 ここから本文
-&lt;br&gt;
-&lt;a href="/"&gt;[ Home ]&lt;/a&gt;
-&lt;/div&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre></div>
-<p>最終的に、このようなhtmlが_siteに生成されます。<br>
-ここまでの例は非常に簡略ですが、スタイルシートを充実させ、<br>
-リストの自動生成（別途説明）などを実装しておけば、<br>
-後は記事ファイルを書いてゆくだけでblogが運用できるようになります。  </p>
+<span class="nt">&lt;br&gt;</span>
+<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/"</span><span class="nt">&gt;</span>[ Home ]<span class="nt">&lt;/a&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre>
+</div>
+<p>最終的に、このようなhtmlが_siteに生成されます。<br />
+ここまでの例は非常に簡略ですが、スタイルシートを充実させ、<br />
+リストの自動生成（別途説明）などを実装しておけば、<br />
+後は記事ファイルを書いてゆくだけでblogが運用できるようになります。</p>
 
 <br>
 pre = github  this = github

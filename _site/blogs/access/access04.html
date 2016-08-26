@@ -23,32 +23,33 @@
 </div>
 
 <div class="post">
-<p>SQLを引数で渡すので、使い回し可能。<br>
-書き込み先のExcelファイル、シート、書き込み開始位置、タイトルも引数で指定。  </p>
-<div class="highlight"><pre><code class="language-" data-lang="">Public Function RsetToEXCEL(mSQL As String, mFile As String, mSheet As String, baseRow As Integer, baseCol As Integer, mTITLE As String) As Integer
+<p>SQLを引数で渡すので、使い回し可能。<br />
+書き込み先のExcelファイル、シート、書き込み開始位置、タイトルも引数で指定。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Public Function RsetToEXCEL(mSQL As String, mFile As String, mSheet As String, baseRow As Integer, baseCol As Integer, mTITLE As String) As Integer
 
     '*************************************************************
     '     SQLで得たレコードセットをEXCELに書き込み
     '*************************************************************
-
+    
     Dim cnn As New ADODB.Connection
     Dim myRS As New ADODB.Recordset
-
+    
     Dim myXLS As Excel.Application
     Dim myWKB As Excel.Workbook
     Dim myWKS As Worksheet
     Dim OpenFileName As String
     Dim fCnt As Integer, i As Integer, j As Integer, rCnt As Integer
-
+    
     Set myXLS = New Excel.Application
     myXLS.Visible = False
     Set myWKB = myXLS.Workbooks.Open(mFile)
     Set myWKS = myWKB.Sheets(mSheet)
-
+    
     Set cnn = CurrentProject.Connection '対象は現DBとする。
     myRS.Open mSQL, cnn
     fCnt = myRS.Fields.Count
-
+    
     With myWKS
         'タイトルの有無によってデータの書出し行を変える。
         If mTITLE = "" Then 'タイトルが無い時はそのまま
@@ -57,7 +58,7 @@
             .Cells(baseRow, 2).Value = mTITLE  'タイトルがあるときは2行下げる
             i = 2
         End If
-
+        
         While Not myRS.EOF
             For j = 0 To fCnt - 1
                 If rCnt = 0 Then .Cells(i + baseRow, j + baseCol).Value = myRS.Fields(j).Name
@@ -71,16 +72,18 @@
             End If
         Wend
     End With
-
+    
     myXLS.DisplayAlerts = False
     myWKB.Save
     myXLS.DisplayAlerts = True
     myXLS.Quit
-
+    
     RsetToEXCEL = rCnt 'レコード数を返す
-
+    
 End Function
-</code></pre></div>
+</code></pre>
+</div>
+
 <br>
 pre = access  this = access
 <a href="/">[ Home ]</a>

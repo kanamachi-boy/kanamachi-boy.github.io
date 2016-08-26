@@ -21,9 +21,10 @@
 </div>
 
 <div class="post">
-<p>DBからSQLでレコードセットを作り、それをExcelへ書き込む例の抜粋。<br>
-出来るだけ1回のWhileで書き込めるようSQLを工夫するのがポイント。  </p>
-<div class="highlight"><pre><code class="language-" data-lang="">Private Sub White_Excel(mPath As String)
+<p>DBからSQLでレコードセットを作り、それをExcelへ書き込む例の抜粋。<br />
+出来るだけ1回のWhileで書き込めるようSQLを工夫するのがポイント。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Private Sub White_Excel(mPath As String)
     'コネクション、レコードセット宣言
     Dim cnn As New ADODB.Connection
     Dim myRS1 As New ADODB.Recordset
@@ -51,7 +52,7 @@
         .Cells.Interior.ColorIndex = xlNone
         .Cells.Font.Name = "ＭＳ Ｐゴシック"
         .Cells.Font.ColorIndex = 1  '黒
-
+        
         'ファイルの見出し等を書き込む
         .Cells(Obj_Settei.Row_ST_Month, C_Base - 1).Value = "値"
         ’ここからレコードセットを回す
@@ -62,19 +63,21 @@
                     '式を入れる場合
                     .Cells(j + 2, mBase * 4 + k + C_Base + 1).FormulaR1C1 
                      = "=RC[-4]+RC[-3]-RC[-2]"
-
+            
             myRS1.MoveNext
         Wend
-
+        
     End With
     ’警告を止めてから保存＆元に戻してExcel終了   
     myXLS.DisplayAlerts = False
     myWKB.Save
     myXLS.DisplayAlerts = True
     myXLS.Quit
-
+    
 End Sub
-</code></pre></div>
+</code></pre>
+</div>
+
 <br>
 pre = android  this = access
 <a href="/">[ Home ]</a>
