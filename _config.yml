@@ -1,4 +1,3 @@
 title: kanamachi-boy
 permalink: /blogs/:categories/:title.html
-markdown: redcarpet
-highlighter: rouge
+
