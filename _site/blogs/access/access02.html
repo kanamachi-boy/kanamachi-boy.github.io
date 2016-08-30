@@ -21,62 +21,64 @@
 </div>
 
 <div class="post">
-<p>DBからSQLでレコードセットを作り、それをExcelへ書き込む例の抜粋。<br>
-出来るだけ1回のWhileで書き込めるようSQLを工夫するのがポイント。  </p>
-<div class="highlight"><pre><code class="language-" data-lang="">Private Sub White_Excel(mPath As String)
-    'コネクション、レコードセット宣言
-    Dim cnn As New ADODB.Connection
-    Dim myRS1 As New ADODB.Recordset
-    Dim mySQL1 As String
-    ’Excel参照設定が必要
-    Dim myXLS As Excel.Application
-    Dim myWKB As Excel.Workbook
-    Dim myWKS As Worksheet
-    ’ターゲットシートを設定、画面ちらつきを抑えるため非表示にする
-    Set myXLS = New Excel.Application
-    myXLS.Visible = False
-    Set myWKB = myXLS.Workbooks.Open(mPath)
-    Set myWKS = myWKB.Sheets("シート名")
-    '接続対象は現DBとする。
-    Set cnn = CurrentProject.Connection 
-    ’SQLを定義
-    mySQL1 = "SELECT ・・・（以下略）" 
-    ’SQLからレコードセット（カーソル？）を得る    
-    myRS1.Open mySQL1, cnn
-    ’シートへ書き込み開始
-    With myWKS
-        'データをクリアし全体の書式を設定
-        .Cells.Clear
-        .Cells.Borders.LineStyle = xlNone
-        .Cells.Interior.ColorIndex = xlNone
-        .Cells.Font.Name = "ＭＳ Ｐゴシック"
-        .Cells.Font.ColorIndex = 1  '黒
+<p>DBからSQLでレコードセットを作り、それをExcelへ書き込む例の抜粋。<br />
+出来るだけ1回のWhileで書き込めるようSQLを工夫するのがポイント。</p>
 
-        'ファイルの見出し等を書き込む
-        .Cells(Obj_Settei.Row_ST_Month, C_Base - 1).Value = "値"
-        ’ここからレコードセットを回す
-        While Not myRS1.EOF
-                j = j + 1
-                '基本はCellsで書き込み位置を決める
-                .Cells(j + 2, C_Base - 1).Value = myRS1.Fields(7).Value 
-                    '式を入れる場合
-                    .Cells(j + 2, mBase * 4 + k + C_Base + 1).FormulaR1C1 
-                     = "=RC[-4]+RC[-3]-RC[-2]"
+<div class="language-vb highlighter-rouge"><pre class="highlight"><code><span class="k">Private</span> <span class="k">Sub</span> <span class="nf">White_Excel</span><span class="p">(</span><span class="n">mPath</span> <span class="ow">As</span> <span class="kt">String</span><span class="p">)</span>
+    <span class="c1">'コネクション、レコードセット宣言</span>
+    <span class="k">Dim</span> <span class="nv">cnn</span> <span class="ow">As</span> <span class="k">New</span> <span class="n">ADODB</span><span class="p">.</span><span class="n">Connection</span>
+    <span class="k">Dim</span> <span class="nv">myRS1</span> <span class="ow">As</span> <span class="k">New</span> <span class="n">ADODB</span><span class="p">.</span><span class="n">Recordset</span>
+    <span class="k">Dim</span> <span class="nv">mySQL1</span> <span class="ow">As</span> <span class="kt">String</span>
+    <span class="c1">'Excel参照設定が必要</span>
+    <span class="k">Dim</span> <span class="nv">myXLS</span> <span class="ow">As</span> <span class="n">Excel</span><span class="p">.</span><span class="n">Application</span>
+    <span class="k">Dim</span> <span class="nv">myWKB</span> <span class="ow">As</span> <span class="n">Excel</span><span class="p">.</span><span class="n">Workbook</span>
+    <span class="k">Dim</span> <span class="nv">myWKS</span> <span class="ow">As</span> <span class="n">Worksheet</span>
+    <span class="c1">'ターゲットシートを設定、画面ちらつきを抑えるため非表示にする</span>
+    <span class="k">Set</span> <span class="n">myXLS</span> <span class="o">=</span> <span class="k">New</span> <span class="n">Excel</span><span class="p">.</span><span class="n">Application</span>
+    <span class="n">myXLS</span><span class="p">.</span><span class="n">Visible</span> <span class="o">=</span> <span class="k">False</span>
+    <span class="k">Set</span> <span class="n">myWKB</span> <span class="o">=</span> <span class="n">myXLS</span><span class="p">.</span><span class="n">Workbooks</span><span class="p">.</span><span class="n">Open</span><span class="p">(</span><span class="n">mPath</span><span class="p">)</span>
+    <span class="k">Set</span> <span class="n">myWKS</span> <span class="o">=</span> <span class="n">myWKB</span><span class="p">.</span><span class="n">Sheets</span><span class="p">(</span><span class="s">"シート名"</span><span class="p">)</span>
+    <span class="c1">'接続対象は現DBとする。</span>
+    <span class="k">Set</span> <span class="n">cnn</span> <span class="o">=</span> <span class="n">CurrentProject</span><span class="p">.</span><span class="n">Connection</span> 
+    <span class="c1">'SQLを定義</span>
+    <span class="n">mySQL1</span> <span class="o">=</span> <span class="s">"SELECT ・・・（以下略）"</span> 
+    <span class="c1">'SQLからレコードセット（カーソル？）を得る    </span>
+    <span class="n">myRS1</span><span class="p">.</span><span class="n">Open</span> <span class="n">mySQL1</span><span class="p">,</span> <span class="n">cnn</span>
+    <span class="c1">'シートへ書き込み開始</span>
+    <span class="k">With</span> <span class="n">myWKS</span>
+        <span class="c1">'データをクリアし全体の書式を設定</span>
+        <span class="p">.</span><span class="n">Cells</span><span class="p">.</span><span class="n">Clear</span>
+        <span class="p">.</span><span class="n">Cells</span><span class="p">.</span><span class="n">Borders</span><span class="p">.</span><span class="n">LineStyle</span> <span class="o">=</span> <span class="n">xlNone</span>
+        <span class="p">.</span><span class="n">Cells</span><span class="p">.</span><span class="n">Interior</span><span class="p">.</span><span class="n">ColorIndex</span> <span class="o">=</span> <span class="n">xlNone</span>
+        <span class="p">.</span><span class="n">Cells</span><span class="p">.</span><span class="n">Font</span><span class="p">.</span><span class="n">Name</span> <span class="o">=</span> <span class="s">"ＭＳ Ｐゴシック"</span>
+        <span class="p">.</span><span class="n">Cells</span><span class="p">.</span><span class="n">Font</span><span class="p">.</span><span class="n">ColorIndex</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1">'黒</span>
+        
+        <span class="c1">'ファイルの見出し等を書き込む</span>
+        <span class="p">.</span><span class="n">Cells</span><span class="p">(</span><span class="n">Obj_Settei</span><span class="p">.</span><span class="n">Row_ST_Month</span><span class="p">,</span> <span class="n">C_Base</span> <span class="o">-</span> <span class="mi">1</span><span class="p">).</span><span class="n">Value</span> <span class="o">=</span> <span class="s">"値"</span>
+        <span class="c1">'ここからレコードセットを回す</span>
+        <span class="k">While</span> <span class="k">Not</span> <span class="n">myRS1</span><span class="p">.</span><span class="n">EOF</span>
+                <span class="n">j</span> <span class="o">=</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="c1">'基本はCellsで書き込み位置を決める</span>
+                <span class="p">.</span><span class="n">Cells</span><span class="p">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">C_Base</span> <span class="o">-</span> <span class="mi">1</span><span class="p">).</span><span class="n">Value</span> <span class="o">=</span> <span class="n">myRS1</span><span class="p">.</span><span class="n">Fields</span><span class="p">(</span><span class="mi">7</span><span class="p">).</span><span class="n">Value</span> 
+                    <span class="c1">'式を入れる場合</span>
+                    <span class="p">.</span><span class="n">Cells</span><span class="p">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">mBase</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">+</span> <span class="n">k</span> <span class="o">+</span> <span class="n">C_Base</span> <span class="o">+</span> <span class="mi">1</span><span class="p">).</span><span class="n">FormulaR1C1</span> 
+                     <span class="o">=</span> <span class="s">"=RC[-4]+RC[-3]-RC[-2]"</span>
+            
+            <span class="n">myRS1</span><span class="p">.</span><span class="n">MoveNext</span>
+        <span class="k">Wend</span>
+        
+    <span class="k">End</span> <span class="k">With</span>
+    <span class="c1">'警告を止めてから保存＆元に戻してExcel終了   </span>
+    <span class="n">myXLS</span><span class="p">.</span><span class="n">DisplayAlerts</span> <span class="o">=</span> <span class="k">False</span>
+    <span class="n">myWKB</span><span class="p">.</span><span class="n">Save</span>
+    <span class="n">myXLS</span><span class="p">.</span><span class="n">DisplayAlerts</span> <span class="o">=</span> <span class="k">True</span>
+    <span class="n">myXLS</span><span class="p">.</span><span class="n">Quit</span>
+    
+<span class="k">End</span> <span class="k">Sub</span>
+</code></pre>
+</div>
 
-            myRS1.MoveNext
-        Wend
-
-    End With
-    ’警告を止めてから保存＆元に戻してExcel終了   
-    myXLS.DisplayAlerts = False
-    myWKB.Save
-    myXLS.DisplayAlerts = True
-    myXLS.Quit
-
-End Sub
-</code></pre></div>
 <br>
-pre = android  this = access
 <a href="/">[ Home ]</a>
 
 

@@ -2,12 +2,12 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<title>レポートでPDF出力する（イマイチ）</title>
+<title>レポートでPDF出力する</title>
 <link rel="stylesheet" href="/css/ban.css">
 <link rel="stylesheet" href="/css/syntax.css">
 </head>
 <body>
-<h1>レポートでPDF出力する（イマイチ）</h1>
+<h1>レポートでPDF出力する</h1>
 <div>
 	<div style="float: left"><span>投稿：25 Aug 2016</span></div>
 	<div style="text-align: right">
@@ -21,31 +21,32 @@
 </div>
 
 <div class="post">
-<p>ペーパーレス時代としては良くありそうな、DBからSQLで抽出しそれをPDFに出力です。<br>
-キモの部分は、  </p>
+<p>ペーパーレス時代としては良くありそうな、DBからSQLで抽出しそれをPDFに出力です。<br />
+キモの部分は、</p>
 
 <ol>
-<li>レポートをデザインする。</li>
-<li>レポート用のクエリを適当に作成する。（レポートの体裁を確認できる程度）</li>
-<li>作成したクエリをレポートのレコードソースに設定する。
-ここまではAccessのデザインで作成。</li>
-<li>VBEで条件を変えながらSQLを生成し、それを上記クエリに設定する</li>
-<li>DoCmdでPDFに出力を繰り返す。</li>
+  <li>レポートをデザインする。</li>
+  <li>レポート用のクエリを適当に作成する。（レポートの体裁を確認できる程度）</li>
+  <li>作成したクエリをレポートのレコードソースに設定する。
+ ここまではAccessのデザインで作成。</li>
+  <li>VBEで条件を変えながらSQLを生成し、それを上記クエリに設定する</li>
+  <li>DoCmdでPDFに出力を繰り返す。</li>
 </ol>
 
-<p>これで、例えば「得意先別受注リスト」を作成します。<br>
-スマートとは言えませんが、  </p>
+<p>これで、例えば「得意先別受注リスト」を作成します。<br />
+スマートとは言えませんが、</p>
 
 <ul>
-<li>レポートのソースを含むプロパティは、レポートを開いてないと変更できないようだ。</li>
-<li>つまり、DoCmd.OutputToでなく、DoCmd.OpenReportでないと変更できない。</li>
-<li>しかし、DoCmd.OpenReportメソッドはPDF出力をサポートしていない。</li>
+  <li>レポートのソースを含むプロパティは、レポートを開いてないと変更できないようだ。</li>
+  <li>つまり、DoCmd.OutputToでなく、DoCmd.OpenReportでないと変更できない。</li>
+  <li>しかし、DoCmd.OpenReportメソッドはPDF出力をサポートしていない。</li>
 </ul>
 
-<p>残念です。何とかならないか研究課題とします。<br>
-なお、DoCmd.OutputTo acOutputReport, レポート名, acFormatPDF, 出力パス<br>
-はAccess2007以降でないと使えないようなのでご注意を。  </p>
-<div class="highlight"><pre><code class="language-vb" data-lang="vb"><span class="k">Sub</span> <span class="nf">makePdfFiles3</span><span class="p">()</span>
+<p>残念です。何とかならないか研究課題とします。<br />
+なお、DoCmd.OutputTo acOutputReport, レポート名, acFormatPDF, 出力パス<br />
+はAccess2007以降でないと使えないようなのでご注意を。</p>
+
+<div class="language-vb highlighter-rouge"><pre class="highlight"><code><span class="k">Sub</span> <span class="nf">makePdfFiles3</span><span class="p">()</span>
     <span class="c1">'保存されているクエリ、テーブル、レポート</span>
     <span class="k">Const</span> <span class="nv">QRY_NAME</span> <span class="o">=</span> <span class="s">"q_blog"</span>
     <span class="k">Const</span> <span class="nv">TBL_NAME</span> <span class="o">=</span> <span class="s">"t_blog"</span>
@@ -59,7 +60,7 @@
     <span class="k">Dim</span> <span class="nv">rs</span> <span class="ow">As</span> <span class="k">New</span> <span class="n">ADODB</span><span class="p">.</span><span class="n">Recordset</span>
     <span class="c1">'PDFは実行パスへ出力</span>
     <span class="n">PDF_PATH</span> <span class="o">=</span> <span class="n">CurrentProject</span><span class="p">.</span><span class="n">Path</span> <span class="o">+</span> <span class="s">"\"</span>
-
+    
     <span class="c1">'Microsoft ActiveX Data Objects 6.1Libraryの参照設定が必要</span>
     <span class="k">Set</span> <span class="n">dbs</span> <span class="o">=</span> <span class="n">CurrentDb</span>
     <span class="k">Set</span> <span class="n">qdf</span> <span class="o">=</span> <span class="n">dbs</span><span class="p">.</span><span class="n">QueryDefs</span><span class="p">(</span><span class="n">QRY_NAME</span><span class="p">)</span>
@@ -79,21 +80,22 @@
                 <span class="o">&amp;</span> <span class="s">" WHERE division='"</span> <span class="o">+</span> <span class="n">rs!div</span> <span class="o">+</span> <span class="s">"' ORDER BY serial;"</span>
         <span class="n">qdf</span><span class="p">.</span><span class="n">SQL</span> <span class="o">=</span> <span class="n">exeSQL</span>
         <span class="n">pdfName</span> <span class="o">=</span> <span class="n">rs!div</span> <span class="o">+</span> <span class="s">"_"</span> <span class="o">+</span> <span class="n">rs!dname</span>
-        <span class="err">’★</span><span class="n">RPT_NAME</span><span class="err">（保存されている</span><span class="n">r_blog</span><span class="err">）は、</span><span class="n">source</span><span class="err">として</span><span class="n">q_blog</span><span class="err">を持っている。</span>
+        <span class="c1">'★RPT_NAME（保存されているr_blog）は、sourceとしてq_blogを持っている。</span>
         <span class="c1">'★そのq_blogのSQLを都度差し替えて（条件を変えて）レポートを作成する。</span>
         <span class="n">DoCmd</span><span class="p">.</span><span class="n">OutputTo</span> <span class="n">acOutputReport</span><span class="p">,</span> <span class="n">RPT_NAME</span><span class="p">,</span> <span class="n">acFormatPDF</span><span class="p">,</span> <span class="n">PDF_PATH</span> <span class="o">&amp;</span> <span class="n">pdfName</span> <span class="o">&amp;</span> <span class="s">".pdf"</span>
         <span class="n">DoCmd</span><span class="p">.</span><span class="n">Close</span>
-
+         
         <span class="n">rs</span><span class="p">.</span><span class="n">MoveNext</span>
     <span class="k">Loop</span>
-
+    
     <span class="c1">'上記ループ内でSQLが置き換えられてしまったので退避していたOriginalに戻す。</span>
     <span class="n">qdf</span><span class="p">.</span><span class="n">SQL</span> <span class="o">=</span> <span class="n">orgSQL</span>
 
 <span class="k">End</span> <span class="k">Sub</span>
-</code></pre></div>
+</code></pre>
+</div>
+
 <br>
-pre = access  this = access
 <a href="/">[ Home ]</a>
 
 	<a href="/blogs/access/access04.html">前へ</a>

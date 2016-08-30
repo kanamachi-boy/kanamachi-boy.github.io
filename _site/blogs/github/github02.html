@@ -23,20 +23,20 @@
 </div>
 
 <div class="post">
-<h2>枠組みを作ります</h2>
-
+<h2 id="section">枠組みを作ります</h2>
 <p>最低限、下図の例のようなディレクトリ構造が必要です。</p>
 
 <ul>
-<li>設定ファイル（_config.yml）無しでもデフォルトで動作しますが、早晩必要になるでしょう。</li>
-<li>スタイルシート（css以下）は動作上必須ではありませんが、さすがに無しでは寂しい。</li>
-<li>レイアウト（_layouts）無しでも生成は可能ですが、blogとして使うなら非現実的です。</li>
-<li>通常、_postsに記事を置きます。日付を先頭に付けるのはお約束のようです。<br>
+  <li>設定ファイル（_config.yml）無しでもデフォルトで動作しますが、早晩必要になるでしょう。</li>
+  <li>スタイルシート（css以下）は動作上必須ではありませんが、さすがに無しでは寂しい。</li>
+  <li>レイアウト（_layouts）無しでも生成は可能ですが、blogとして使うなら非現実的です。</li>
+  <li>通常、_postsに記事を置きます。日付を先頭に付けるのはお約束のようです。<br />
 もちろん、この下にディレクトリを置いても可。</li>
-<li>ローカルでbuildしないなら_siteは不要、jekyllをインストールする必要もありませんが<br>
+  <li>ローカルでbuildしないなら_siteは不要、jekyllをインストールする必要もありませんが<br />
 git pushしないと変更結果を確認できないので実用的ではないかも。</li>
 </ul>
-<div class="highlight"><pre><code class="language-" data-lang="">└─kanamachi-boy.github.io
+
+<div class="highlighter-rouge"><pre class="highlight"><code>└─kanamachi-boy.github.io
     │  _config.yml
     │  index.html
     │
@@ -52,57 +52,68 @@ git pushしないと変更結果を確認できないので実用的ではない
     │      2016-08-23-golf01.md
     │
     └─_site
-</code></pre></div>
-<p>動作テストであれば、次のようなindex.htmlを作成してGitHubへpushすれば  </p>
-<div class="highlight"><pre><code class="language-" data-lang="">---
+</code></pre>
+</div>
+
+<p>動作テストであれば、次のようなindex.htmlを作成してGitHubへpushすれば</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>---
 ---
 こんにちは。
-</code></pre></div>
-<p>GitHub側でHTMLを生成してくれるので<br>
-ブラウザから <code>kanamachi-boy.github.io</code>で動作確認できます。<br>
+</code></pre>
+</div>
+
+<p>GitHub側でHTMLを生成してくれるので<br />
+ブラウザから <code class="highlighter-rouge">kanamachi-boy.github.io</code>で動作確認できます。<br />
 普通は、</p>
-<div class="highlight"><pre><code class="language-" data-lang="">---
+
+<div class="highlighter-rouge"><pre class="highlight"><code>---
 layout: post
 title: GitHub Pagesへjekyllで投稿してみる２
 ---
 こんにちは。
-</code></pre></div>
-<p>のようにディレクティブ（YAML Front Matter）を書きますが、空でもbuildはします。<br>
-ファイル名をindex.mdにしてもOKです。<br>
-（拡張子ではなく先頭二本の<code>---</code>の有無でbuild対象か判定しているらしい。）</p>
+</code></pre>
+</div>
 
-<h2>少し体裁を整える</h2>
+<p>のようにディレクティブ（YAML Front Matter）を書きますが、空でもbuildはします。<br />
+ファイル名をindex.mdにしてもOKです。<br />
+（拡張子ではなく先頭二本の<code class="highlighter-rouge">---</code>の有無でbuild対象か判定しているらしい。）</p>
 
-<p>シンプルな構成ですが  </p>
+<h2 id="section-1">少し体裁を整える</h2>
+<p>シンプルな構成ですが</p>
 
 <ul>
-<li>index.htmlに記事の一覧とそのリンクを設置。</li>
-<li>リンクから各記事に飛ぶ。</li>
+  <li>index.htmlに記事の一覧とそのリンクを設置。</li>
+  <li>リンクから各記事に飛ぶ。</li>
 </ul>
 
-<p>とします。  </p>
+<p>とします。</p>
 
 <p>また、ページの体裁を整えるため雛形（laytout）を使いますが、</p>
 
 <ul>
-<li>index.htmlは、default.htmlを雛形にする。</li>
-<li>各記事はpost.htmlを雛形にし、さらにpost.htmlはdefault.htmlを雛形にする。</li>
+  <li>index.htmlは、default.htmlを雛形にする。</li>
+  <li>各記事はpost.htmlを雛形にし、さらにpost.htmlはdefault.htmlを雛形にする。</li>
 </ul>
 
-<p>とします。  </p>
+<p>とします。</p>
 
-<p>index.htmlの例として簡単ですが、  </p>
-<div class="highlight"><pre><code class="language-" data-lang="">---
+<p>index.htmlの例として簡単ですが、</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>---
 layout: default
 title: kanamachi-boy
 ---
 &lt;h2&gt;記事の一覧&lt;/h2&gt;
 （一覧を表示する部分は省略）
 &lt;/div&gt;
-</code></pre></div>
-<p>ここで<code>layout: default</code>とは雛形としてdefault.htmlを使いますという意味です。<br>
+</code></pre>
+</div>
+
+<p>ここで<code class="highlighter-rouge">layout: default</code>とは雛形としてdefault.htmlを使いますという意味です。<br />
 そのdefault.htmlの例を見てみると、</p>
-<div class="highlight"><pre><code class="language-none" data-lang="none">
+
+<pre><code class="language-none">
 &lt;!doctype html&gt;
 &lt;html lang="ja"&gt;
 &lt;head&gt;
@@ -115,19 +126,23 @@ title: kanamachi-boy
 &lt;/body&gt;
 &lt;/html&gt;
 
-</code></pre></div>
-<p>jekyllではLiquidというテンプレートエンジンが使われており、<br>
-<code>{{ }}</code>で囲まれた部分は変数を表します。<br>
-<code>{{ content }}</code>はテンプレートの呼出し元の本文部分を指すので、  </p>
-<div class="highlight"><pre><code class="language-" data-lang="">&lt;h2&gt;記事の一覧&lt;/h2&gt;
+</code></pre>
+
+<p>jekyllではLiquidというテンプレートエンジンが使われており、<br />
+<code class="highlighter-rouge"><span class="p">{</span><span class="err">{</span><span class="w"> </span><span class="p">}</span><span class="err">}</span></code>で囲まれた部分は変数を表します。<br />
+<code class="highlighter-rouge"><span class="p">{</span><span class="err">{</span><span class="w"> </span><span class="err">content</span><span class="w"> </span><span class="p">}</span><span class="err">}</span></code>はテンプレートの呼出し元の本文部分を指すので、</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;h2&gt;記事の一覧&lt;/h2&gt;
 （一覧を表示する部分は省略）
 &lt;/div&gt;
-</code></pre></div>
-<p>がこれに置き換わって生成されるということです。<br>
-同様に<code>{{ page.title }}</code>は呼出し元を表す&quot;page&quot; に定義された変数&quot;title&quot;の値、<br>
-すなわち&quot;kanamachi-boy&quot;に置き換わります。<br>
+</code></pre>
+</div>
+<p>がこれに置き換わって生成されるということです。<br />
+同様に<code class="highlighter-rouge"><span class="p">{</span><span class="err">{</span><span class="w"> </span><span class="err">page.title</span><span class="w"> </span><span class="p">}</span><span class="err">}</span></code>は呼出し元を表す”page” に定義された変数”title”の値、<br />
+すなわち”kanamachi-boy”に置き換わります。<br />
 まとめると生成されたindex.htmlは</p>
-<div class="highlight"><pre><code class="language-none" data-lang="none">&lt;!doctype html&gt;
+
+<pre><code class="language-none">&lt;!doctype html&gt;
 &lt;html lang="ja"&gt;
 &lt;head&gt;
 &lt;meta charset="utf-8"&gt;
@@ -140,15 +155,14 @@ title: kanamachi-boy
 &lt;/div&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-</code></pre></div>
-<p>となり、原本のindex.htmlとは別に_site以下へ保存されます。  </p>
+</code></pre>
+<p>となり、原本のindex.htmlとは別に_site以下へ保存されます。</p>
 
 <p>続く。</p>
 
 <p><a href="http://melborne.github.io/2013/05/20/now-the-time-to-start-jekyll/">参考になるサイト</a></p>
 
 <br>
-pre = github  this = github
 <a href="/">[ Home ]</a>
 
 	<a href="/blogs/github/github01.html">前へ</a>

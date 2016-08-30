@@ -23,19 +23,21 @@
 </div>
 
 <div class="post">
-<h2>体裁を整える（続き）</h2>
-
+<h2 id="section">体裁を整える（続き）</h2>
 <p>次に各記事を見てみます。
 _postsに元になる.mdファイルがあります。</p>
-<div class="highlight"><pre><code class="language-" data-lang="">---
+
+<div class="highlighter-rouge"><pre class="highlight"><code>---
 layout: post
 title: GitHub Pagesへjekyllで投稿してみる（３）
 ---
 ## 見出し
 ここから本文
-</code></pre></div>
+</code></pre>
+</div>
 <p>この記事が使うテンプレート（layout）はpost.htmlとあります。</p>
-<div class="highlight"><pre><code class="language-" data-lang="">---
+
+<div class="highlighter-rouge"><pre class="highlight"><code>---
 layout: default
 ---
 
@@ -47,10 +49,12 @@ layout: default
 &lt;a href="/"&gt;[ Home ]&lt;/a&gt;
 &lt;/div&gt;
 
-</code></pre></div>
-<p>post.htmlはさらにdefault.htmlを使うという入れ子になっているので、<br>
+</code></pre>
+</div>
+<p>post.htmlはさらにdefault.htmlを使うという入れ子になっているので、<br />
 元の記事をpost.htmlに挿入、さらにそれをdefault.htmlに挿入して、</p>
-<div class="highlight"><pre><code class="language-none" data-lang="none">&lt;!doctype html&gt;
+
+<pre><code class="language-none">&lt;!doctype html&gt;
 &lt;html lang="ja"&gt;
 &lt;head&gt;
 &lt;meta charset="utf-8"&gt;
@@ -68,14 +72,13 @@ layout: default
 &lt;/div&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-</code></pre></div>
-<p>最終的に、このようなhtmlが_siteに生成されます。<br>
-ここまでの例は非常に簡略ですが、スタイルシートを充実させ、<br>
-リストの自動生成（別途説明）などを実装しておけば、<br>
-後は記事ファイルを書いてゆくだけでblogが運用できるようになります。  </p>
+</code></pre>
+<p>最終的に、このようなhtmlが_siteに生成されます。<br />
+ここまでの例は非常に簡略ですが、スタイルシートを充実させ、<br />
+リストの自動生成（別途説明）などを実装しておけば、<br />
+後は記事ファイルを書いてゆくだけでblogが運用できるようになります。</p>
 
 <br>
-pre = github  this = github
 <a href="/">[ Home ]</a>
 
 	<a href="/blogs/github/github02.html">前へ</a>

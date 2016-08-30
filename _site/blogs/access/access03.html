@@ -23,54 +23,56 @@
 </div>
 
 <div class="post">
-<p>ファイルタイプを引数で設定するファイル選択ダイアログ。  </p>
-<div class="highlight"><pre><code class="language-" data-lang="">Public Function FileSelect(mType As Integer, mIniDir As String) As String
-    '*************************************************************
-    '    ファイル選択ダイアログ
-    '*************************************************************
-    'Microsoft Office 10.0 Object Libraryを参照設定すること。
-    Dim varSelectedFile As Variant
+<p>ファイルタイプを引数で設定するファイル選択ダイアログ。</p>
 
-    With Application.FileDialog(msoFileDialogFilePicker)
-        'ダイアログタイトル名
-        .Title = "ファイルを選択してください"
-        'ファイルの種類を定義します。
-        .Filters.Clear
-        If mType = 0 Then
-            .Filters.Add "EXCELファイル", "*.xls"
-            .Filters.Add "EXCELファイル", "*.xlsx"
-            .Filters.Add "EXCELファイル", "*.xlsm"
-        ElseIf mType = 1 Then
-            .Filters.Add "ACCESSファイル", "*.mdb"
-        ElseIf mType = 2 Then
-            .Filters.Add "CSVファイル", "*.csv"
-        Else
-            .Filters.Add "全てのファイル", "*.*"
-        End If
+<div class="language-vb highlighter-rouge"><pre class="highlight"><code><span class="k">Public</span> <span class="k">Function</span> <span class="nf">FileSelect</span><span class="p">(</span><span class="n">mType</span> <span class="ow">As</span> <span class="kt">Integer</span><span class="p">,</span> <span class="n">mIniDir</span> <span class="ow">As</span> <span class="kt">String</span><span class="p">)</span> <span class="ow">As</span> <span class="kt">String</span>
+    <span class="c1">'*************************************************************</span>
+    <span class="c1">'    ファイル選択ダイアログ</span>
+    <span class="c1">'*************************************************************</span>
+    <span class="c1">'Microsoft Office 10.0 Object Libraryを参照設定すること。</span>
+    <span class="k">Dim</span> <span class="nv">varSelectedFile</span> <span class="ow">As</span> <span class="kt">Variant</span>
+    
+    <span class="k">With</span> <span class="n">Application</span><span class="p">.</span><span class="n">FileDialog</span><span class="p">(</span><span class="n">msoFileDialogFilePicker</span><span class="p">)</span>
+        <span class="c1">'ダイアログタイトル名</span>
+        <span class="p">.</span><span class="n">Title</span> <span class="o">=</span> <span class="s">"ファイルを選択してください"</span>
+        <span class="c1">'ファイルの種類を定義します。</span>
+        <span class="p">.</span><span class="n">Filters</span><span class="p">.</span><span class="n">Clear</span>
+        <span class="k">If</span> <span class="n">mType</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">Then</span>
+            <span class="p">.</span><span class="n">Filters</span><span class="p">.</span><span class="n">Add</span> <span class="s">"EXCELファイル"</span><span class="p">,</span> <span class="s">"*.xls"</span>
+            <span class="p">.</span><span class="n">Filters</span><span class="p">.</span><span class="n">Add</span> <span class="s">"EXCELファイル"</span><span class="p">,</span> <span class="s">"*.xlsx"</span>
+            <span class="p">.</span><span class="n">Filters</span><span class="p">.</span><span class="n">Add</span> <span class="s">"EXCELファイル"</span><span class="p">,</span> <span class="s">"*.xlsm"</span>
+        <span class="k">ElseIf</span> <span class="n">mType</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">Then</span>
+            <span class="p">.</span><span class="n">Filters</span><span class="p">.</span><span class="n">Add</span> <span class="s">"ACCESSファイル"</span><span class="p">,</span> <span class="s">"*.mdb"</span>
+        <span class="k">ElseIf</span> <span class="n">mType</span> <span class="o">=</span> <span class="mi">2</span> <span class="k">Then</span>
+            <span class="p">.</span><span class="n">Filters</span><span class="p">.</span><span class="n">Add</span> <span class="s">"CSVファイル"</span><span class="p">,</span> <span class="s">"*.csv"</span>
+        <span class="k">Else</span>
+            <span class="p">.</span><span class="n">Filters</span><span class="p">.</span><span class="n">Add</span> <span class="s">"全てのファイル"</span><span class="p">,</span> <span class="s">"*.*"</span>
+        <span class="k">End</span> <span class="k">If</span>
+            
+        <span class="c1">'複数ファイル選択を可能にする場合はTrue、不可の場合はFalse。</span>
+        <span class="p">.</span><span class="n">AllowMultiSelect</span> <span class="o">=</span> <span class="k">False</span>
+        
+        <span class="c1">'最初に開くファイル設定。</span>
+        <span class="k">If</span> <span class="n">mIniDir</span> <span class="o">=</span> <span class="s">""</span> <span class="k">Then</span>
+            <span class="p">.</span><span class="n">InitialFileName</span> <span class="o">=</span> <span class="n">CurrentProject</span><span class="p">.</span><span class="n">Path</span>
+        <span class="k">Else</span>
+            <span class="p">.</span><span class="n">InitialFileName</span> <span class="o">=</span> <span class="n">mIniDir</span>
+        <span class="k">End</span> <span class="k">If</span>
+            
+        <span class="k">If</span> <span class="p">.</span><span class="n">Show</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="k">Then</span> <span class="c1">'ファイルが選択されれば　-1 を返します。</span>
+            <span class="k">For</span> <span class="k">Each</span> <span class="n">varSelectedFile</span> <span class="ow">In</span> <span class="p">.</span><span class="n">SelectedItems</span>
+                <span class="n">FileSelect</span> <span class="o">=</span> <span class="n">varSelectedFile</span>
+            <span class="k">Next</span>
+        <span class="k">Else</span>
+            <span class="n">FileSelect</span> <span class="o">=</span> <span class="s">""</span>
+        <span class="k">End</span> <span class="k">If</span>
+    <span class="k">End</span> <span class="k">With</span>
+    
+<span class="k">End</span> <span class="k">Function</span>
+</code></pre>
+</div>
 
-        '複数ファイル選択を可能にする場合はTrue、不可の場合はFalse。
-        .AllowMultiSelect = False
-
-        '最初に開くファイル設定。
-        If mIniDir = "" Then
-            .InitialFileName = CurrentProject.Path
-        Else
-            .InitialFileName = mIniDir
-        End If
-
-        If .Show = -1 Then 'ファイルが選択されれば　-1 を返します。
-            For Each varSelectedFile In .SelectedItems
-                FileSelect = varSelectedFile
-            Next
-        Else
-            FileSelect = ""
-        End If
-    End With
-
-End Function
-</code></pre></div>
 <br>
-pre = access  this = access
 <a href="/">[ Home ]</a>
 
 	<a href="/blogs/access/access02.html">前へ</a>
