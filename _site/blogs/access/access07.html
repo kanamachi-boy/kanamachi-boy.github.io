@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>正規表現</title>
+<link rel="stylesheet" href="/css/ban.css">
+<link rel="stylesheet" href="/css/syntax.css">
+</head>
+<body>
+<h1>正規表現</h1>
+<div>
+	<div style="float: left"><span>投稿：02 Sep 2016</span></div>
+	<div style="text-align: right">
+	
+		<a href="/blogs/access/access06.html">前へ</a>
+	
+	
+	
+	<a href="/">[ Home ]</a>
+	</div>
+</div>
+
+<div class="post">
+<p>出納帳ツールから抜粋</p>
+
+<div class="language-vb highlighter-rouge"><pre class="highlight"><code><span class="k">Sub</span> <span class="nf">Macro1</span><span class="p">()</span>
+
+    <span class="k">Dim</span> <span class="nv">x1</span> <span class="ow">As</span> <span class="kt">Integer</span><span class="p">,</span> <span class="n">y1</span> <span class="ow">As</span> <span class="kt">Integer</span><span class="p">,</span> <span class="n">y2</span> <span class="ow">As</span> <span class="kt">Integer</span>
+    <span class="k">Dim</span> <span class="nv">myWKS</span> <span class="ow">As</span> <span class="n">Worksheet</span>
+    <span class="k">Dim</span> <span class="nv">j</span> <span class="ow">As</span> <span class="kt">Integer</span>
+    <span class="k">Dim</span> <span class="nv">celVAL1</span><span class="p">,</span> <span class="n">celVAL2</span><span class="p">,</span> <span class="n">celVAL3</span>
+    
+    <span class="k">Dim</span> <span class="nv">RE</span> <span class="ow">As</span> <span class="k">New</span> <span class="n">RegExp</span>
+    <span class="k">Dim</span> <span class="nv">MC1</span> <span class="ow">As</span> <span class="n">MatchCollection</span><span class="p">,</span> <span class="n">MC2</span> <span class="ow">As</span> <span class="n">MatchCollection</span>
+    <span class="k">Dim</span> <span class="nv">M</span> <span class="ow">As</span> <span class="n">Match</span>
+    
+	<span class="c1">'	worksheetの操作（略）</span>
+    
+    <span class="c1">'正規表現で金額を取り出す準備</span>
+    <span class="n">RE</span><span class="p">.</span><span class="n">Pattern</span> <span class="o">=</span> <span class="s">"([0-9,]+).*円.*"</span>
+    <span class="n">RE</span><span class="p">.</span><span class="n">Global</span> <span class="o">=</span> <span class="k">True</span>
+   
+    <span class="k">With</span> <span class="n">myWKS</span>
+    <span class="c1">'1行づつ下へ処理してゆく</span>
+    <span class="k">For</span> <span class="n">j</span> <span class="o">=</span> <span class="n">y1</span> <span class="k">To</span> <span class="n">y2</span>
+    
+        <span class="c1">'支出列、収入列、項目</span>
+        <span class="n">celVAL1</span> <span class="o">=</span> <span class="p">.</span><span class="n">Cells</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">x1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">).</span><span class="n">Value</span>
+        <span class="n">celVAL2</span> <span class="o">=</span> <span class="p">.</span><span class="n">Cells</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">x1</span> <span class="o">+</span> <span class="mi">2</span><span class="p">).</span><span class="n">Value</span>
+        
+        <span class="c1">'金額のある列を探すため正規表現検査を実行</span>
+        <span class="k">Set</span> <span class="n">MC1</span> <span class="o">=</span> <span class="n">RE</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">celVAL1</span><span class="p">)</span>
+        <span class="k">Set</span> <span class="n">MC2</span> <span class="o">=</span> <span class="n">RE</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">celVAL2</span><span class="p">)</span>
+        
+        <span class="k">If</span> <span class="n">MC1</span><span class="p">.</span><span class="n">Count</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">Then</span>    <span class="c1">'支出列にマッチした場合</span>
+            <span class="k">Set</span> <span class="n">M</span> <span class="o">=</span> <span class="n">MC1</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="p">.</span><span class="n">Cells</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">x1</span> <span class="o">+</span> <span class="mi">2</span><span class="p">).</span><span class="n">Value</span> <span class="o">=</span> <span class="n">M</span><span class="p">.</span><span class="n">SubMatches</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1">'数字の部分</span>
+        <span class="k">ElseIf</span> <span class="n">MC2</span><span class="p">.</span><span class="n">Count</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">Then</span>  <span class="c1">'収入列にマッチした場合</span>
+            <span class="k">Set</span> <span class="n">M</span> <span class="o">=</span> <span class="n">MC2</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="p">.</span><span class="n">Cells</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">x1</span> <span class="o">+</span> <span class="mi">3</span><span class="p">).</span><span class="n">Value</span> <span class="o">=</span> <span class="n">M</span><span class="p">.</span><span class="n">SubMatches</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1">'数字の部分</span>
+        <span class="k">Else</span>    
+            <span class="n">MsgBox</span> <span class="s">"選択範囲が間違っているか、扱えないフォーマットです。"</span>
+            <span class="k">Exit</span> <span class="k">Sub</span>
+        <span class="nf">End</span> <span class="k">If</span>
+        
+        <span class="c1">'項目は全て2列目に</span>
+	 <span class="c1">'	sheetへoutput部分（略）</span>
+
+        <span class="c1">'正規表現用オブジェクトを初期化</span>
+        <span class="k">Set</span> <span class="n">M</span> <span class="o">=</span> <span class="k">Nothing</span>
+        <span class="k">Set</span> <span class="n">MC1</span> <span class="o">=</span> <span class="k">Nothing</span>
+        <span class="k">Set</span> <span class="n">MC2</span> <span class="o">=</span> <span class="k">Nothing</span>
+        
+    <span class="k">Next</span> <span class="n">j</span>
+    <span class="k">End</span> <span class="k">With</span>
+    
+    <span class="c1">'最後のcopy元選択を解除</span>
+    <span class="n">Application</span><span class="p">.</span><span class="n">CutCopyMode</span> <span class="o">=</span> <span class="k">False</span>
+    
+<span class="k">End</span> <span class="k">Sub</span>
+</code></pre>
+</div>
+
+<br>
+<a href="/">[ Home ]</a>
+
+	<a href="/blogs/access/access06.html">前へ</a>
+
+
+</div>
+
+
+</body>
+</html>
